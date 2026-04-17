@@ -7,14 +7,14 @@
 # Run main.py with --debug to see region outlines drawn on a capture.
 
 REGIONS: dict[str, dict] = {
-    # Green/red bar — lower center of screen
-    "health_bar": {"x": 0.432, "y": 0.795, "w": 0.136, "h": 0.028},
+    # Green/red bar — right of character portrait, lower center
+    "health_bar": {"x": 0.468, "y": 0.795, "w": 0.115, "h": 0.028},
 
-    # Blue bar — just below health bar
-    "mana_bar":   {"x": 0.432, "y": 0.830, "w": 0.136, "h": 0.018},
+    # Blue bar — directly below health bar
+    "mana_bar":   {"x": 0.468, "y": 0.833, "w": 0.115, "h": 0.020},
 
-    # Gold counter — bottom-left HUD (yellow digits)
-    "gold":       {"x": 0.018, "y": 0.878, "w": 0.085, "h": 0.058},
+    # Gold counter — below the relic slots, bottom-left HUD
+    "gold":       {"x": 0.018, "y": 0.930, "w": 0.080, "h": 0.050},
 
     # Match timer — top-center (MM:SS digits)
     "timer":      {"x": 0.452, "y": 0.018, "w": 0.096, "h": 0.048},
