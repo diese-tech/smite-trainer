@@ -11,7 +11,7 @@ REGIONS: dict[str, dict] = {
     "health_bar": {"x": 0.468, "y": 0.828, "w": 0.115, "h": 0.025},
 
     # Blue bar — directly below health bar
-    "mana_bar":   {"x": 0.468, "y": 0.858, "w": 0.115, "h": 0.020},
+    "mana_bar":   {"x": 0.468, "y": 0.868, "w": 0.115, "h": 0.022},
 
     # Gold counter — bottom-left HUD, text row only (items are above this)
     "gold":       {"x": 0.018, "y": 0.955, "w": 0.080, "h": 0.030},
