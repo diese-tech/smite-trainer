@@ -6,6 +6,8 @@ import cv2
 import numpy as np
 import pytesseract
 
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
 # Tesseract config: single line, digits only, LSTM engine.
 _OCR_CONFIG = "--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789"
 
