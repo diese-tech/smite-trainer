@@ -28,15 +28,12 @@ def read_gold(frame: np.ndarray) -> int:
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
 
-    # The gold number is bright white text on a dark background.
-    # Threshold to isolate bright pixels, then invert for black-on-white OCR.
-    _, mask = cv2.threshold(gray, 160, 255, cv2.THRESH_BINARY)
+    # Otsu finds the optimal threshold automatically per frame.
+    _, mask = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     mask = cv2.bitwise_not(mask)
 
-    # Clean up noise then upscale — Tesseract reads larger text more accurately.
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-    mask = cv2.resize(mask, None, fx=3, fy=3, interpolation=cv2.INTER_NEAREST)
+    # Upscale — Tesseract reads larger text more accurately.
+    mask = cv2.resize(mask, None, fx=4, fy=4, interpolation=cv2.INTER_NEAREST)
 
     try:
         raw = pytesseract.image_to_string(mask, config=_OCR_CONFIG).strip()
