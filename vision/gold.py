@@ -22,14 +22,17 @@ def read_gold(frame: np.ndarray) -> int:
     if frame is None or frame.size == 0:
         return -1
 
-    # Skip the left 25% of the frame — that's the coin icon, not the number.
+    # Crop: skip top 45% (item icons) and left 25% (coin icon).
     h, w = frame.shape[:2]
-    frame = frame[:, int(w * 0.25):]
+    frame = frame[int(h * 0.45):, int(w * 0.25):]
 
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
+    bgr = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
 
-    # Fixed threshold — lower value catches the HUD text in normal gameplay.
-    _, mask = cv2.threshold(gray, 80, 255, cv2.THRESH_BINARY)
+    # Gold number is near-white (low saturation, high brightness).
+    # Item icons are colourful (high saturation) — this filter excludes them.
+    mask = cv2.inRange(hsv, np.array([0, 0, 160], dtype=np.uint8),
+                            np.array([179, 50, 255], dtype=np.uint8))
     mask = cv2.bitwise_not(mask)
 
     # Upscale — Tesseract reads larger text more accurately.
