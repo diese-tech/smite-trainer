@@ -38,6 +38,13 @@ def read_health(frame: np.ndarray) -> float:
     return _bar_fill_pct(frame, _HEALTH_LOW, _HEALTH_HIGH)
 
 
-def read_mana(frame: np.ndarray) -> float:
+def read_mana(frame: np.ndarray, debug: bool = False) -> float:
     """Return player mana as a percentage (0–100). -1 if unreadable."""
+    if debug and frame is not None:
+        import os
+        os.makedirs("debug", exist_ok=True)
+        bgr = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+        cv2.imwrite("debug/mana_raw.png", bgr)
+        hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
+        cv2.imwrite("debug/mana_mask.png", cv2.inRange(hsv, _MANA_LOW, _MANA_HIGH))
     return _bar_fill_pct(frame, _MANA_LOW, _MANA_HIGH)

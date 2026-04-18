@@ -58,7 +58,7 @@ def _capture_loop(overlay: OverlayWindow, debug: bool) -> None:
         # --- Vision ---
         state = GameState(
             health_pct = read_health(frames["health_bar"]),
-            mana_pct   = read_mana(frames["mana_bar"]),
+            mana_pct   = read_mana(frames["mana_bar"], debug=debug),
             gold       = read_gold(frames["gold"]),
             timestamp  = time.monotonic(),
         )
