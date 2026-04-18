@@ -6,10 +6,6 @@ import cv2
 import numpy as np
 import pytesseract
 
-# Smite 2 gold digits are rendered in a bright yellow/gold on a dark background.
-_GOLD_LOW  = np.array([18,  120, 120], dtype=np.uint8)   # HSV
-_GOLD_HIGH = np.array([38,  255, 255], dtype=np.uint8)
-
 # Tesseract config: single line, digits only, LSTM engine.
 _OCR_CONFIG = "--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789"
 
@@ -24,13 +20,16 @@ def read_gold(frame: np.ndarray) -> int:
     if frame is None or frame.size == 0:
         return -1
 
-    bgr = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
-    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv, _GOLD_LOW, _GOLD_HIGH)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
+
+    # The gold number is bright white text on a dark background.
+    # Threshold to isolate bright pixels, then invert for black-on-white OCR.
+    _, mask = cv2.threshold(gray, 160, 255, cv2.THRESH_BINARY)
+    mask = cv2.bitwise_not(mask)
 
     # Clean up noise then upscale — Tesseract reads larger text more accurately.
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
     mask = cv2.resize(mask, None, fx=3, fy=3, interpolation=cv2.INTER_NEAREST)
 
     try:
