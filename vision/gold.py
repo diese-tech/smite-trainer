@@ -22,14 +22,14 @@ def read_gold(frame: np.ndarray) -> int:
     if frame is None or frame.size == 0:
         return -1
 
-    # Skip the left 38% of the frame — that's the coin icon, not the number.
+    # Skip the left 25% of the frame — that's the coin icon, not the number.
     h, w = frame.shape[:2]
-    frame = frame[:, int(w * 0.38):]
+    frame = frame[:, int(w * 0.25):]
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
 
-    # Otsu finds the optimal threshold automatically per frame.
-    _, mask = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    # Fixed threshold — white text on dark HUD background is consistently bright.
+    _, mask = cv2.threshold(gray, 120, 255, cv2.THRESH_BINARY)
     mask = cv2.bitwise_not(mask)
 
     # Upscale — Tesseract reads larger text more accurately.
