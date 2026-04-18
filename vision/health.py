@@ -47,4 +47,8 @@ def read_mana(frame: np.ndarray, debug: bool = False) -> float:
         cv2.imwrite("debug/mana_raw.png", bgr)
         hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
         cv2.imwrite("debug/mana_mask.png", cv2.inRange(hsv, _MANA_LOW, _MANA_HIGH))
+        # Sample the middle row to find the actual bar colour
+        mid = hsv[hsv.shape[0] // 2]
+        print(f"[mana HSV mid-row] mean={mid.mean(axis=0).astype(int).tolist()}  "
+              f"max={mid.max(axis=0).tolist()}")
     return _bar_fill_pct(frame, _MANA_LOW, _MANA_HIGH)
