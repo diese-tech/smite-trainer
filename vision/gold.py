@@ -22,9 +22,9 @@ def read_gold(frame: np.ndarray) -> int:
     if frame is None or frame.size == 0:
         return -1
 
-    # Skip left 15% — that's the coin icon, not the number.
+    # Skip left 8% — that's the coin icon, not the number.
     h, w = frame.shape[:2]
-    frame = frame[:, int(w * 0.15):]
+    frame = frame[:, int(w * 0.08):]
 
     bgr = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
