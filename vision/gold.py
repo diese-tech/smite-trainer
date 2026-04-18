@@ -28,8 +28,8 @@ def read_gold(frame: np.ndarray) -> int:
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
 
-    # Fixed threshold — white text on dark HUD background is consistently bright.
-    _, mask = cv2.threshold(gray, 120, 255, cv2.THRESH_BINARY)
+    # Fixed threshold — lower value catches the HUD text in normal gameplay.
+    _, mask = cv2.threshold(gray, 80, 255, cv2.THRESH_BINARY)
     mask = cv2.bitwise_not(mask)
 
     # Upscale — Tesseract reads larger text more accurately.

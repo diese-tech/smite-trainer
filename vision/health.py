@@ -8,9 +8,9 @@ import numpy as np
 _HEALTH_LOW  = np.array([40,  60, 60], dtype=np.uint8)
 _HEALTH_HIGH = np.array([90, 255, 255], dtype=np.uint8)
 
-# Mana bar: blue
-_MANA_LOW  = np.array([95,  60, 60], dtype=np.uint8)
-_MANA_HIGH = np.array([135, 255, 255], dtype=np.uint8)
+# Mana bar: blue-to-cyan range (Smite 2 uses a teal-blue tone)
+_MANA_LOW  = np.array([80,  50, 60], dtype=np.uint8)
+_MANA_HIGH = np.array([140, 255, 255], dtype=np.uint8)
 
 
 def _bar_fill_pct(frame: np.ndarray, low: np.ndarray, high: np.ndarray) -> float:
