@@ -22,6 +22,10 @@ def read_gold(frame: np.ndarray) -> int:
     if frame is None or frame.size == 0:
         return -1
 
+    # Skip the left 38% of the frame — that's the coin icon, not the number.
+    h, w = frame.shape[:2]
+    frame = frame[:, int(w * 0.38):]
+
     gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
 
     # The gold number is bright white text on a dark background.
@@ -44,6 +48,7 @@ def read_gold(frame: np.ndarray) -> int:
         return -1
 
     try:
-        return int(digits[0])
+        value = int(digits[0])
+        return value if value <= 9999 else -1  # sanity cap
     except ValueError:
         return -1
