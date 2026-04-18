@@ -13,8 +13,8 @@ REGIONS: dict[str, dict] = {
     # Blue bar — directly below health bar
     "mana_bar":   {"x": 0.468, "y": 0.858, "w": 0.115, "h": 0.020},
 
-    # Gold counter — below the relic slots, bottom-left HUD
-    "gold":       {"x": 0.018, "y": 0.930, "w": 0.080, "h": 0.050},
+    # Gold counter — bottom-left HUD, text row only (items are above this)
+    "gold":       {"x": 0.018, "y": 0.955, "w": 0.080, "h": 0.030},
 
     # Match timer — top-center (MM:SS digits)
     "timer":      {"x": 0.452, "y": 0.018, "w": 0.096, "h": 0.048},
