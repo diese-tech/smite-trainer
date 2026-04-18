@@ -35,6 +35,14 @@ def read_gold(frame: np.ndarray) -> int:
     # Upscale — Tesseract reads larger text more accurately.
     mask = cv2.resize(mask, None, fx=4, fy=4, interpolation=cv2.INTER_NEAREST)
 
+    # Always save the last processed mask so it can be inspected.
+    try:
+        import os
+        os.makedirs("debug", exist_ok=True)
+        cv2.imwrite("debug/gold_mask.png", mask)
+    except Exception:
+        pass
+
     try:
         raw = pytesseract.image_to_string(mask, config=_OCR_CONFIG).strip()
     except Exception:
