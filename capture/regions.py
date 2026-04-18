@@ -8,10 +8,10 @@
 
 REGIONS: dict[str, dict] = {
     # Green/red bar — right of character portrait, lower center
-    "health_bar": {"x": 0.468, "y": 0.795, "w": 0.115, "h": 0.028},
+    "health_bar": {"x": 0.468, "y": 0.828, "w": 0.115, "h": 0.025},
 
     # Blue bar — directly below health bar
-    "mana_bar":   {"x": 0.468, "y": 0.833, "w": 0.115, "h": 0.020},
+    "mana_bar":   {"x": 0.468, "y": 0.858, "w": 0.115, "h": 0.020},
 
     # Gold counter — below the relic slots, bottom-left HUD
     "gold":       {"x": 0.018, "y": 0.930, "w": 0.080, "h": 0.050},
